@@ -1,0 +1,97 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #edeeed;
+    /* background-image: url(./IronMan3_2194942100-IRM0NNG1._V359405456_SX1080_.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover; */
+}
+
+.drops{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 500px;
+    width: 500px;
+    border: 1px solid red; */
+}
+
+/* 水珠本體 */
+.drop{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    /* background: #000; */
+    background: transparent;
+    /* border-radius: 50%; */
+        /* Fancy Border Radius Generator */
+        /* https://9elements.github.io/fancy-border-radius/ */
+    border-radius: 57% 43% 37% 63% / 45% 52% 48% 55% ;
+    box-shadow: 
+        inset 
+        10px 10px 10px rgba(0,0,0,0.05),
+        15px 25px 10px rgba(0,0,0,0.1),
+        15px 20px 20px rgba(0,0,0,0.05),
+        /* 增加透射光 */
+        /* 左右 上下 柔軟度 */
+        5px 5px 10px rgb(0, 0, 0,0.1),
+        8px 10px 5px rgba(255, 255, 255, 1),
+        inset 
+        -10px -10px 15px rgba(255,255,255,0.9);
+}
+
+/* 水珠亮面 */
+.drop::before{
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 35px;
+    background: #fff;
+    width: 20px;
+    height: 20px;
+    /* border-radius: 50%; */
+    /* border-radius: 25% 75% 37% 63% / 40% 43% 57% 60% ; */
+    border-radius: 42% 58% 37% 63% / 40% 43% 57% 60% ;
+}
+
+/* 水珠亮面反光 */
+.drop::after{
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 65px;
+    background: #fff;
+    width: 10px;
+    height: 10px;
+    /* border-radius: 50%; */
+    /* border-radius: 25% 75% 37% 63% / 40% 43% 57% 60% ; */
+    /* border-radius: 42% 58% 37% 63% / 40% 43% 57% 60% ; */
+    border-radius: 57% 43% 37% 63% / 48% 37% 63% 52% ;
+}
+
+
+.drop:nth-child(2){
+    transform: scale(0.5) translate(-200px,180px); 
+    border-radius: 63% 37% 42% 58% / 42% 37% 63% 58% ;
+}
+
+.drop:nth-child(3){
+    transform: scale(0.5) translate(280px,10px); /*以本體為起點的位置*/ 
+    border-radius: 49% 51% 42% 58% / 56% 47% 53% 44% ;
+}
+
+.drop:nth-child(4){
+    transform: scale(0.35) translate(120px,-350px);
+    border-radius: 39% 61% 63% 37% / 77% 47% 53% 23% ;
+}

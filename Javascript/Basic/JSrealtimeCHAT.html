@@ -1,0 +1,111 @@
+<!-- souce : https://www.youtube.com/watch?v=CK2XEyVGc6c -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- ↓↓↓ 從FireBase取得 for web 基本資料 ↓↓↓ -->
+    <!-- 新增專案 > 取名 > 不使用分析工具 > 獲得程式碼 -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+
+    <!-- 這算是額外自己要加的! -->
+    <!-- include firebase database -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCmdXn_jd_jHm4PvoeoaIVOevf10j-9GjM",
+            authDomain: "jsrealtimechat-20210709-f58de.firebaseapp.com",
+            projectId: "jsrealtimechat-20210709-f58de",
+            storageBucket: "jsrealtimechat-20210709-f58de.appspot.com",
+            messagingSenderId: "453877958897",
+            appId: "1:453877958897:web:0bd531861cfe7d71698150"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <!-- ↑↑↑ 從FireBase取得 for web 基本資料 ↑↑↑ -->
+    <!-- 回到FireBase主控台 >> Realtime Database >> 建立資料庫 >> 美國!! >> 以測試模式啟動  -->
+</head>
+<body>
+
+    <!-- create a form to send message -->
+    <!-- 創建一個打字的欄位，不過onsubmit 應該可以直接使用 sendMessage() -->
+    <form onsubmit="return sendMessage();">
+        <input id='message' placeholder="Enter Message..." autocomplete="off">
+        <input type='submit'>
+    </form>
+    <!-- create a list -->
+    <!-- 用列表清單的風格來呈現對話，同時也是對話的內容呈現位置 -->
+    <ul id='messages'></ul>
+
+    <script>
+        // 第一階段先輸入使用者ID
+        var myName = prompt("please enter your ID");
+
+        // 這個函數就是監聽打字欄位的內容 所以對應的是message
+        function sendMessage() {
+            // get message 底下的input
+            var message = document.getElementById('message').value;
+            // save in database
+            // 用ref來接收輸入的內容，透過push增加到database的dict內容，並且用set的方式讓格式都有 {'使用者','訊息'}
+            firebase.database().ref('messages').push().set({
+                'sender':myName,
+                'message':message
+            })
+            return false;
+        }
+
+        // listening incoming messages
+        // 這邊則是將在文字欄位的輸入內容先存到database之後，透過以下的指令把資料庫的內容一一的放到列表清單風格的位置
+        firebase.database().ref('messages').on('child_added',function(snapshot){
+            var html ="";
+            // give each message a unique ID
+            // 原本架構是 html +="<li >"; 但是透過增加id的不同，未來就可以針對獨立的id做刪減
+            html +="<li id='message-" + snapshot.key + "'>";
+                // show delete message function if the message is sent by self
+                // 如果訊息是由你產生的，就會多出一個刪除的按鈕，所以這個<li></li>裡面會包含一或兩種內容
+                // 按鈕
+                if(snapshot.val().sender == myName){
+                    html += "<button data-id='" + snapshot.key +"' onclick = 'deleteMessage(this);'>";
+                        html += "Delete"
+                    html += "</button>";
+                }
+                // 訊息 
+                // 不能用else，因為兩個是要並存的而不是二擇一
+                    html += snapshot.val().sender + ":" + snapshot.val().message;
+            html +="</li>";
+
+            document.getElementById('messages').innerHTML += html;
+        })
+
+        // 做給按鈕的功能
+        function deleteMessage(self){
+            // get message ID
+            var messageId = self.getAttribute('data-id');
+
+            // delete message
+            // 針對id來移除訊息
+            firebase.database().ref('messages').child(messageId).remove();
+        }
+
+        // attach listener for delete message
+        // 告知正在使用者們，某條訊息被作者刪除了
+        firebase.database().ref('messages').on('child_removed',function(snapshot){
+            // remove message node
+            document.getElementById('message-' + snapshot.key).innerHTML = 'This message has been removed'
+        })
+
+        // ref ? child_added ? child_removed? snapshot? 
+    </script>
+</body>
+</html>

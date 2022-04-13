@@ -1,0 +1,55 @@
+<!-- source : https://www.youtube.com/watch?v=8K2ihr3NC40 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- type='file'只有tag input可以使用 -->
+    <!-- <button type="file" id='imagefile'></button> -->
+    <!-- <type type="file" id='imagefile'></type> -->
+    <input type="file" id='imagefile'></input>
+
+    <img src="" id="imgPreview" alt="Preview">
+
+    <script>
+        // 針對id imagefile 去做監聽
+        // addEventListener('內建功能',後續想作動的函式)
+        document.querySelector('#imagefile').addEventListener('change',function(){
+            // 當感測到更動的時候，不僅是console會反映選擇的檔案相關log，甚至在html上會出現檔名! 應該是change的功能關係
+            console.log('this.files : ' , this.files)
+            // FileList {0: File, length: 1}
+            //     0: File
+            //         lastModified: 1562483981811
+            //         lastModifiedDate: Sun Jul 07 2019 15:19:41 GMT+0800 (台北標準時間) {}
+            //         name: "1479645136540651.jpg"
+            //         size: 121044
+            //         type: "image/jpeg"
+            //         webkitRelativePath: ""
+            //         __proto__: File
+            //     length: 1
+            //     __proto__: FileList
+
+            const reader = new FileReader();
+            // 使用load，而且換另一個函式的寫法
+            reader.addEventListener('load',()=>{
+                // ...這裡就不呈現console了，會秀出整個圖檔的亂碼
+                console.log('reader.result : ',reader.result)
+                // 這裡可以將上一次選擇的圖檔內容，儲存到網頁裡面，F12 > application > Storage > Local Storage就可以看到
+                localStorage.setItem('recent-image' , reader.result);
+            })
+            reader.readAsDataURL(this.files[0]);
+        })
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+            const recentImageDataUrl = localStorage.getItem('recent-image');
+            if(recentImageDataUrl){
+                document.querySelector('#imgPreview').setAttribute('src' , recentImageDataUrl);
+            }
+        })
+    </script>
+</body>
+</html>

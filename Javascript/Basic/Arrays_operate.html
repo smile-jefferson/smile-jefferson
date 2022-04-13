@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        <script>
+            let empty = [];
+                document.writeln("")
+                document.writeln('empty : ' , empty)
+            let newEmpty = new Array();
+                document.writeln('newEmpty : ' , newEmpty)
+                document.writeln("")
+
+            let list = [1,2,3,4,5]
+                document.writeln('list : ' , list)
+                document.writeln('list.length : ' , list.length)
+            let mixed = new Array('AEIOU' , 15.99 , 2021 , null , true);
+                document.writeln('mixed : ' , mixed)
+                document.writeln('mixed.length : ' , mixed.length)
+            
+                document.writeln("")
+                document.writeln('empty.length : ' , empty.length)
+
+            let elements =[];
+                elements['Water'] = 'Emotion' ;
+                elements['Fire'] = 'Force' ;
+                elements['Earth'] = 'Body' ;
+                elements['Air'] = 'Mind' ;
+                elements['Wind'] = 'Soul' ;
+
+                    document.writeln("")
+                    document.writeln('elements : ' , elements)
+                    console.log('elements : ' , elements)
+
+                    document.writeln("")
+                    document.writeln('Object.keys(elements).length : ' , Object.keys(elements).length)
+                    document.writeln('elements.length : ' , elements.length)
+                    document.writeln('typeof elements : ' , typeof elements)
+                    document.writeln('Array.isArray(elements) : ' , Array.isArray(elements))
+                    
+                    document.writeln("")
+                    document.writeln('elements[Water] : ' , elements['Water'])
+                    document.writeln('elements.Water : ' , elements.Water)
+                    document.writeln("")
+                    document.writeln('mixed[1] : ' , mixed[1])
+                    document.writeln('mixed[2] : ' , mixed[2])
+                    document.writeln("")
+                    
+            for(i=0 ; i<mixed.length ; i++){
+                document.writeln('mixed[i] : ' , mixed[i])
+            }
+            document.writeln("")
+            
+            let cards = 
+            {
+                1:'Term_A',
+                2:'Term_B',
+                3:'Term_C',
+                4:'Term_D',
+                5:'Term_E',
+                6:'Term_F',
+                7:'Term_G',
+            }
+            
+            for (i=1 ; i<=Object.keys(cards).length ; i++){
+                document.writeln('mixed[i]_v.1 : ' , cards[i])
+            }
+            document.writeln("")
+            
+            for (i in cards){
+                document.writeln('mixed[i]_v.2 : ' , cards[i])
+            }
+            document.writeln("")
+            
+            let colors =
+            {
+                Red:'Blood',
+                Orange:'Creativity',
+                Yellow:'Sun',
+                Green:'Plant',
+                Blue:'Ocean'
+            }
+            for (let key in colors){
+                document.writeln('colors[key] : ' , colors[key])
+            }
+            document.writeln("")
+
+            let animals = ['Wolf' , 'Cat' , 'Cow' , 'Eagle' , 'Condor' , 'Snake']
+            for (key = 0;key<animals.length;key++){
+                document.writeln('animals[key] : ' , animals[key])
+            }
+            document.writeln("")
+
+            let keywords=['Harmony' , 'Love' , 'Womb' , 'Witch' , 'Nature'];
+            key = 0;
+            while (keywords[key]){
+                document.writeln(keywords[key]);
+                key++
+            }
+            document.writeln("")
+
+            let books = ['1900' , 'The Lord of the Rings' , 'Harry Potter'];
+            key = 0;
+            do {
+                document.writeln(books[key]);
+                key++;
+            }while(books[key]);
+            document.writeln("")
+
+            for (key in books){
+                document.writeln(books[key])
+            }
+            document.writeln("")
+            
+        </script>
+    </pre>
+</body>
+</html>
